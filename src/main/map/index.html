@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+            crossorigin=""></script>
+    <script src="https://unpkg.com/sql.js@0.3.2/js/sql.js"></script>
+    <script src="./Leaflet.TileLayer.MBTiles.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="map" style="height: 90vh"></div>
+    <button onclick="selectPlan('big_german')">Big German</button>
+    <button onclick="selectPlan('big_german8k')">Big German 8k - Scaled</button>
+    <button onclick="selectPlan('big_german8k_v2')">Big German 8k V2 - Scaled</button>
+    <button onclick="selectPlan('big_german16k')">Big German 16k</button>
+    <button onclick="selectPlan('big_german16k_v2')">Big German 16k V2 - Scaled</button>
+    <button onclick="selectPlan('big_german16k_v4')">Big German 16k -127 +90 +127 -90</button>
+    <button onclick="selectPlan('partial_plan')">Partial</button>
+    <button onclick="selectPlan('test')">Test</button>
+</body>
+<script>
+    var floorPlans = {
+        big_german: L.tileLayer.mbTiles('../resources/big_german1.mbtiles', {
+            minZoom: 1,
+            maxZoom: 4
+        }),
+        big_german8k: L.tileLayer.mbTiles('../resources/big_german8k.mbtiles', {
+        }),
+        big_german16k: L.tileLayer.mbTiles('../resources/big_german16k.mbtiles', {
+            minZoom: 1,
+            maxZoom: 6
+        }),
+        big_german8k_v2: L.tileLayer.mbTiles('../resources/big_german8k_v2.mbtiles', {
+            minZoom: 1,
+            maxZoom: 6
+        }),
+        big_german16k_v2: L.tileLayer.mbTiles('../resources/big_german16k_v2.mbtiles', {
+            minZoom: 1,
+            maxZoom: 6
+        }),
+        big_german16k_v4: L.tileLayer.mbTiles('../resources/big_german16k_v4.mbtiles', {
+            minZoom: 1,
+            maxZoom: 10
+        }),
+        partial_plan: L.tileLayer.mbTiles('../resources/partial plan_v2.mbtiles', {
+            minZoom: 1,
+            maxZoom: 4
+        }),
+        test: L.tileLayer.mbTiles('../resources/test1.mbtiles', {
+            minZoom: 1,
+            maxZoom: 4
+        }),
+    }
+    var map = new L.Map('map').setView([0, 0], 11);
+    var Leaflet = L.noConflict();
+    //floorPlans.big_german.addTo(map);
+    //floorPlans.big_german8k.addTo(map);
+    //floorPlans.partial_plan.addTo(map);
+    //floorPlans.test.addTo(map);
+
+    function selectPlan(planName){
+        map.removeLayer(floorPlans.big_german);
+        map.removeLayer(floorPlans.big_german8k);
+        map.removeLayer(floorPlans.big_german16k);
+        map.removeLayer(floorPlans.big_german8k_v2);
+        map.removeLayer(floorPlans.big_german16k_v2);
+        map.removeLayer(floorPlans.big_german16k_v4);
+        map.removeLayer(floorPlans.partial_plan);
+        map.removeLayer(floorPlans.test);
+        switch(planName){
+            case 'big_german':
+                floorPlans.big_german.addTo(map);
+                break;
+            case "big_german8k":
+                floorPlans.big_german8k.addTo(map);
+                break;
+            case "big_german16k":
+                floorPlans.big_german16k.addTo(map);
+                break;
+            case "big_german8k_v2":
+                floorPlans.big_german8k_v2.addTo(map);
+                break;
+            case "big_german16k_V2":
+                floorPlans.big_german16k_v2.addTo(map);
+                break;
+            case "big_german16k_v4":
+                floorPlans.big_german16k_v4.addTo(map);
+                break;
+            case "partial_plan":
+                floorPlans.partial_plan.addTo(map);
+                break;
+            case "test":
+                floorPlans.test.addTo(map);
+                break
+            default:
+                break;
+        }
+    }
+</script>
+</html>
